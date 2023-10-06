@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\ClientRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -45,6 +47,14 @@ class Client
     #[ORM\Column(name: 'updated', type: Types::DATETIME_MUTABLE)]
     #[Gedmo\Timestampable]    
     private ?\DateTimeInterface $updated = null;
+
+    #[ORM\OneToMany(mappedBy: 'client_id', targetEntity: PostalAdress::class)]
+    private Collection $postalAdresses;
+
+    public function __construct()
+    {
+        $this->postalAdresses = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -143,6 +153,36 @@ class Client
     public function setUpdated(\DateTimeInterface $updated): static
     {
         $this->updated = $updated;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, PostalAdress>
+     */
+    public function getPostalAdresses(): Collection
+    {
+        return $this->postalAdresses;
+    }
+
+    public function addPostalAdress(PostalAdress $postalAdress): static
+    {
+        if (!$this->postalAdresses->contains($postalAdress)) {
+            $this->postalAdresses->add($postalAdress);
+            $postalAdress->setClientId($this);
+        }
+
+        return $this;
+    }
+
+    public function removePostalAdress(PostalAdress $postalAdress): static
+    {
+        if ($this->postalAdresses->removeElement($postalAdress)) {
+            // set the owning side to null (unless already changed)
+            if ($postalAdress->getClientId() === $this) {
+                $postalAdress->setClientId(null);
+            }
+        }
 
         return $this;
     }
