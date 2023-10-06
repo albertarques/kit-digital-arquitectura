@@ -32,10 +32,18 @@ class Client
     #[ORM\Column(type: Types::SMALLINT)]
     private ?int $active = null;
 
-    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    /**
+     * @var \DateTime
+     */
+    #[Gedmo\Timestampable(on: 'create')]
+    #[ORM\Column(name: 'created', type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $created = null;
 
-    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    /**
+     * @var \DateTime
+     */
+    #[ORM\Column(name: 'updated', type: Types::DATETIME_MUTABLE)]
+    #[Gedmo\Timestampable]    
     private ?\DateTimeInterface $updated = null;
 
     public function getId(): ?int
