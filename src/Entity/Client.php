@@ -51,9 +51,13 @@ class Client
     #[ORM\OneToMany(mappedBy: 'client_id', targetEntity: PostalAdress::class)]
     private Collection $postalAdresses;
 
+    #[ORM\OneToMany(mappedBy: 'client_id', targetEntity: CameraRoll::class)]
+    private Collection $cameraRolls;
+
     public function __construct()
     {
         $this->postalAdresses = new ArrayCollection();
+        $this->cameraRolls = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -181,6 +185,36 @@ class Client
             // set the owning side to null (unless already changed)
             if ($postalAdress->getClientId() === $this) {
                 $postalAdress->setClientId(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, CameraRoll>
+     */
+    public function getCameraRolls(): Collection
+    {
+        return $this->cameraRolls;
+    }
+
+    public function addCameraRoll(CameraRoll $cameraRoll): static
+    {
+        if (!$this->cameraRolls->contains($cameraRoll)) {
+            $this->cameraRolls->add($cameraRoll);
+            $cameraRoll->setClientId($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCameraRoll(CameraRoll $cameraRoll): static
+    {
+        if ($this->cameraRolls->removeElement($cameraRoll)) {
+            // set the owning side to null (unless already changed)
+            if ($cameraRoll->getClientId() === $this) {
+                $cameraRoll->setClientId(null);
             }
         }
 
