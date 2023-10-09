@@ -7,6 +7,8 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
+
 
 #[ORM\Entity(repositoryClass: ClientRepository::class)]
 class Client
@@ -34,26 +36,24 @@ class Client
     #[ORM\Column(type: Types::SMALLINT)]
     private ?int $active = null;
 
-    /**
-     * @var \DateTime
-     */
     #[Gedmo\Timestampable(on: 'create')]
     #[ORM\Column(name: 'created', type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $created = null;
 
-    /**
-     * @var \DateTime
-     */
-    #[ORM\Column(name: 'updated', type: Types::DATETIME_MUTABLE)]
-    #[Gedmo\Timestampable]    
+    #[ORM\Column(name: 'updated', nullable: true,  type: Types::DATETIME_MUTABLE)]
+    #[Gedmo\Timestampable(on: 'update')]
     private ?\DateTimeInterface $updated = null;
 
     #[ORM\OneToMany(mappedBy: 'client_id', targetEntity: PostalAdress::class)]
     private Collection $postalAdresses;
 
+    #[ORM\OneToMany(mappedBy: 'client_id', targetEntity: CameraRoll::class)]
+    private Collection $cameraRolls;
+
     public function __construct()
     {
         $this->postalAdresses = new ArrayCollection();
+        $this->cameraRolls = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -181,6 +181,36 @@ class Client
             // set the owning side to null (unless already changed)
             if ($postalAdress->getClientId() === $this) {
                 $postalAdress->setClientId(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, CameraRoll>
+     */
+    public function getCameraRolls(): Collection
+    {
+        return $this->cameraRolls;
+    }
+
+    public function addCameraRoll(CameraRoll $cameraRoll): static
+    {
+        if (!$this->cameraRolls->contains($cameraRoll)) {
+            $this->cameraRolls->add($cameraRoll);
+            $cameraRoll->setClientId($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCameraRoll(CameraRoll $cameraRoll): static
+    {
+        if ($this->cameraRolls->removeElement($cameraRoll)) {
+            // set the owning side to null (unless already changed)
+            if ($cameraRoll->getClientId() === $this) {
+                $cameraRoll->setClientId(null);
             }
         }
 
