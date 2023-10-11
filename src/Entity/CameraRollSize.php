@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 #[ORM\Entity(repositoryClass: CameraRollSizeRepository::class)]
 class CameraRollSize
@@ -19,10 +20,12 @@ class CameraRollSize
     #[ORM\Column(nullable: true)]
     private ?int $size = null;
 
-    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    #[Gedmo\Timestampable(on: 'create')]
+    #[ORM\Column(name: 'created', type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $created = null;
 
-    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
+    #[Gedmo\Timestampable(on: 'update')]
+    #[ORM\Column(name: 'updated', nullable: true, type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $updated = null;
 
     #[ORM\OneToMany(mappedBy: 'size', targetEntity: CameraRoll::class)]

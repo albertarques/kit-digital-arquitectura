@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\PostalAdressRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 #[ORM\Entity(repositoryClass: PostalAdressRepository::class)]
 class PostalAdress
@@ -43,7 +44,7 @@ class PostalAdress
     /**
      * @var \DateTime
      */
-    #[ORM\Column(name: 'updated', type: Types::DATETIME_MUTABLE)]
+    #[ORM\Column(name: 'updated', nullable: true, type: Types::DATETIME_MUTABLE)]
     #[Gedmo\Timestampable]    
     private ?\DateTimeInterface $updated = null;
 

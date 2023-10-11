@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\ShipmentRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 #[ORM\Entity(repositoryClass: ShipmentRepository::class)]
 class Shipment
@@ -24,10 +25,12 @@ class Shipment
     #[ORM\Column(nullable: true)]
     private ?int $price = null;
 
-    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    #[Gedmo\Timestampable(on: 'create')]
+    #[ORM\Column(name: 'created', type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $created = null;
 
-    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
+    #[Gedmo\Timestampable(on: 'update')]
+    #[ORM\Column(name: 'updated', nullable: true,  type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $updated = null;
 
     public function getId(): ?int

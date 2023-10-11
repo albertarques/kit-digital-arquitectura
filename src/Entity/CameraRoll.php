@@ -5,7 +5,9 @@ namespace App\Entity;
 use App\Repository\CameraRollRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 #[ORM\Entity(repositoryClass: CameraRollRepository::class)]
 class CameraRoll
@@ -39,6 +41,14 @@ class CameraRoll
     #[ORM\ManyToOne(inversedBy: 'cameraRolls')]
     #[ORM\JoinColumn(nullable: false)]
     private ?CameraRollType $type = null;
+
+    #[Gedmo\Timestampable(on: 'create')]
+    #[ORM\Column(name: 'created', type: Types::DATETIME_MUTABLE)]
+    private ?\DateTimeInterface $created = null;
+
+    #[Gedmo\Timestampable(on: 'update')]
+    #[ORM\Column(name: 'updated', nullable: true,  type: Types::DATETIME_MUTABLE)]
+    private ?\DateTimeInterface $updated = null;
 
     public function __construct()
     {
@@ -153,6 +163,30 @@ class CameraRoll
     public function setType(?CameraRollType $type): static
     {
         $this->type = $type;
+
+        return $this;
+    }
+
+    public function getCreated(): ?\DateTimeInterface
+    {
+        return $this->created;
+    }
+
+    public function setCreated(\DateTimeInterface $created): static
+    {
+        $this->created = $created;
+
+        return $this;
+    }
+
+    public function getUpdated(): ?\DateTimeInterface
+    {
+        return $this->updated;
+    }
+
+    public function setUpdated(?\DateTimeInterface $updated): static
+    {
+        $this->updated = $updated;
 
         return $this;
     }
