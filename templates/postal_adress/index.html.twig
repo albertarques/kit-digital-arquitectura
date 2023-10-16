@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}PostalAdress index{% endblock %}
+
+{% block body %}
+    <h1>PostalAdress index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Street_adress</th>
+                <th>Town</th>
+                <th>Postal_code</th>
+                <th>Province</th>
+                <th>Country</th>
+                <th>Created</th>
+                <th>Updated</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for postal_adress in postal_adresses %}
+            <tr>
+                <td>{{ postal_adress.id }}</td>
+                <td>{{ postal_adress.streetAdress }}</td>
+                <td>{{ postal_adress.town }}</td>
+                <td>{{ postal_adress.postalCode }}</td>
+                <td>{{ postal_adress.province }}</td>
+                <td>{{ postal_adress.country }}</td>
+                <td>{{ postal_adress.created ? postal_adress.created|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ postal_adress.updated ? postal_adress.updated|date('Y-m-d H:i:s') : '' }}</td>
+                <td>
+                    <a href="{{ path('app_postal_adress_show', {'id': postal_adress.id}) }}">show</a>
+                    <a href="{{ path('app_postal_adress_edit', {'id': postal_adress.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="9">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_postal_adress_new') }}">Create new</a>
+{% endblock %}
