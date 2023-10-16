@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Shipment{% endblock %}
+
+{% block body %}
+    <h1>Shipment</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ shipment.id }}</td>
+            </tr>
+            <tr>
+                <th>State</th>
+                <td>{{ shipment.state }}</td>
+            </tr>
+            <tr>
+                <th>Price</th>
+                <td>{{ shipment.price }}</td>
+            </tr>
+            <tr>
+                <th>Created</th>
+                <td>{{ shipment.created ? shipment.created|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Updated</th>
+                <td>{{ shipment.updated ? shipment.updated|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_shipment_index') }}">back to list</a>
+
+    <a href="{{ path('app_shipment_edit', {'id': shipment.id}) }}">edit</a>
+
+    {{ include('shipment/_delete_form.html.twig') }}
+{% endblock %}
