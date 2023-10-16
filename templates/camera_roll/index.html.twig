@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}CameraRoll index{% endblock %}
+
+{% block body %}
+    <h1>CameraRoll index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Shipment_id</th>
+                <th>Created</th>
+                <th>Updated</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for camera_roll in camera_rolls %}
+            <tr>
+                <td>{{ camera_roll.id }}</td>
+                <td>{{ camera_roll.shipmentId }}</td>
+                <td>{{ camera_roll.created ? camera_roll.created|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ camera_roll.updated ? camera_roll.updated|date('Y-m-d H:i:s') : '' }}</td>
+                <td>
+                    <a href="{{ path('app_camera_roll_show', {'id': camera_roll.id}) }}">show</a>
+                    <a href="{{ path('app_camera_roll_edit', {'id': camera_roll.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_camera_roll_new') }}">Create new</a>
+{% endblock %}

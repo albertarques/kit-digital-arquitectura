@@ -1,0 +1,50 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}PostalAdress{% endblock %}
+
+{% block body %}
+    <h1>PostalAdress</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ postal_adress.id }}</td>
+            </tr>
+            <tr>
+                <th>Street_adress</th>
+                <td>{{ postal_adress.streetAdress }}</td>
+            </tr>
+            <tr>
+                <th>Town</th>
+                <td>{{ postal_adress.town }}</td>
+            </tr>
+            <tr>
+                <th>Postal_code</th>
+                <td>{{ postal_adress.postalCode }}</td>
+            </tr>
+            <tr>
+                <th>Province</th>
+                <td>{{ postal_adress.province }}</td>
+            </tr>
+            <tr>
+                <th>Country</th>
+                <td>{{ postal_adress.country }}</td>
+            </tr>
+            <tr>
+                <th>Created</th>
+                <td>{{ postal_adress.created ? postal_adress.created|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Updated</th>
+                <td>{{ postal_adress.updated ? postal_adress.updated|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_postal_adress_index') }}">back to list</a>
+
+    <a href="{{ path('app_postal_adress_edit', {'id': postal_adress.id}) }}">edit</a>
+
+    {{ include('postal_adress/_delete_form.html.twig') }}
+{% endblock %}

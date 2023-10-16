@@ -1,0 +1,34 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}CameraRoll{% endblock %}
+
+{% block body %}
+    <h1>CameraRoll</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ camera_roll.id }}</td>
+            </tr>
+            <tr>
+                <th>Shipment_id</th>
+                <td>{{ camera_roll.shipmentId }}</td>
+            </tr>
+            <tr>
+                <th>Created</th>
+                <td>{{ camera_roll.created ? camera_roll.created|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Updated</th>
+                <td>{{ camera_roll.updated ? camera_roll.updated|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_camera_roll_index') }}">back to list</a>
+
+    <a href="{{ path('app_camera_roll_edit', {'id': camera_roll.id}) }}">edit</a>
+
+    {{ include('camera_roll/_delete_form.html.twig') }}
+{% endblock %}

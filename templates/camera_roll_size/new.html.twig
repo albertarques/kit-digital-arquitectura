@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New CameraRollSize{% endblock %}
+
+{% block body %}
+    <h1>Create new CameraRollSize</h1>
+
+    {{ include('camera_roll_size/_form.html.twig') }}
+
+    <a href="{{ path('app_camera_roll_size_index') }}">back to list</a>
+{% endblock %}
