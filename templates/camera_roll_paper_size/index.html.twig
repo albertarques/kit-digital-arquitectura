@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}CameraRollPaperSize index{% endblock %}
+
+{% block body %}
+    <h1>CameraRollPaperSize index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Size</th>
+                <th>Created</th>
+                <th>Updated</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for camera_roll_paper_size in camera_roll_paper_sizes %}
+            <tr>
+                <td>{{ camera_roll_paper_size.id }}</td>
+                <td>{{ camera_roll_paper_size.size }}</td>
+                <td>{{ camera_roll_paper_size.created ? camera_roll_paper_size.created|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ camera_roll_paper_size.updated ? camera_roll_paper_size.updated|date('Y-m-d H:i:s') : '' }}</td>
+                <td>
+                    <a href="{{ path('app_camera_roll_paper_size_show', {'id': camera_roll_paper_size.id}) }}">show</a>
+                    <a href="{{ path('app_camera_roll_paper_size_edit', {'id': camera_roll_paper_size.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_camera_roll_paper_size_new') }}">Create new</a>
+{% endblock %}
