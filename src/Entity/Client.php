@@ -7,16 +7,11 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
-use Gedmo\Mapping\Annotation as Gedmo;
 
 
 #[ORM\Entity(repositoryClass: ClientRepository::class)]
-class Client
+class Client extends AbstractEntity
 {
-    #[ORM\Id]
-    #[ORM\GeneratedValue]
-    #[ORM\Column]
-    private ?int $id = null;
 
     #[ORM\Column(length: 255)]
     private ?string $username = null;
@@ -36,14 +31,6 @@ class Client
     #[ORM\Column(type: Types::SMALLINT)]
     private ?int $active = null;
 
-    #[Gedmo\Timestampable(on: 'create')]
-    #[ORM\Column(name: 'created', type: Types::DATETIME_MUTABLE)]
-    private ?\DateTimeInterface $created = null;
-
-    #[ORM\Column(name: 'updated', nullable: true,  type: Types::DATETIME_MUTABLE)]
-    #[Gedmo\Timestampable(on: 'update')]
-    private ?\DateTimeInterface $updated = null;
-
     #[ORM\OneToMany(mappedBy: 'client_id', targetEntity: PostalAdress::class)]
     private Collection $postalAdresses;
 
@@ -54,11 +41,6 @@ class Client
     {
         $this->postalAdresses = new ArrayCollection();
         $this->cameraRolls = new ArrayCollection();
-    }
-
-    public function getId(): ?int
-    {
-        return $this->id;
     }
 
     public function getUsername(): ?string
@@ -129,30 +111,6 @@ class Client
     public function setActive(int $active): static
     {
         $this->active = $active;
-
-        return $this;
-    }
-
-    public function getCreated(): ?\DateTimeInterface
-    {
-        return $this->created;
-    }
-
-    public function setCreated(\DateTimeInterface $created): static
-    {
-        $this->created = $created;
-
-        return $this;
-    }
-
-    public function getUpdated(): ?\DateTimeInterface
-    {
-        return $this->updated;
-    }
-
-    public function setUpdated(\DateTimeInterface $updated): static
-    {
-        $this->updated = $updated;
 
         return $this;
     }

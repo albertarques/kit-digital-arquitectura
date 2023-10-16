@@ -3,17 +3,11 @@
 namespace App\Entity;
 
 use App\Repository\PostalAdressRepository;
-use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
-use Gedmo\Mapping\Annotation as Gedmo;
 
 #[ORM\Entity(repositoryClass: PostalAdressRepository::class)]
-class PostalAdress
+class PostalAdress extends AbstractEntity
 {
-    #[ORM\Id]
-    #[ORM\GeneratedValue]
-    #[ORM\Column]
-    private ?int $id = null;
 
     #[ORM\ManyToOne(inversedBy: 'postalAdresses')]
     #[ORM\JoinColumn(nullable: false)]
@@ -33,25 +27,6 @@ class PostalAdress
 
     #[ORM\Column(length: 255)]
     private ?string $country = null;
-
-    /**
-     * @var \DateTime
-     */
-    #[Gedmo\Timestampable(on: 'create')]
-    #[ORM\Column(name: 'created', type: Types::DATETIME_MUTABLE)]
-    private ?\DateTimeInterface $created = null;
-
-    /**
-     * @var \DateTime
-     */
-    #[ORM\Column(name: 'updated', nullable: true, type: Types::DATETIME_MUTABLE)]
-    #[Gedmo\Timestampable]    
-    private ?\DateTimeInterface $updated = null;
-
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
 
     public function getClientId(): ?Client
     {
@@ -121,30 +96,6 @@ class PostalAdress
     public function setCountry(string $country): static
     {
         $this->country = $country;
-
-        return $this;
-    }
-
-    public function getCreated(): ?\DateTimeInterface
-    {
-        return $this->created;
-    }
-
-    public function setCreated(\DateTimeInterface $created): static
-    {
-        $this->created = $created;
-
-        return $this;
-    }
-
-    public function getUpdated(): ?\DateTimeInterface
-    {
-        return $this->updated;
-    }
-
-    public function setUpdated(\DateTimeInterface $updated): static
-    {
-        $this->updated = $updated;
 
         return $this;
     }

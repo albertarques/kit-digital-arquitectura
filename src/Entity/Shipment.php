@@ -8,12 +8,8 @@ use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 
 #[ORM\Entity(repositoryClass: ShipmentRepository::class)]
-class Shipment
+class Shipment extends AbstractEntity
 {
-    #[ORM\Id]
-    #[ORM\GeneratedValue]
-    #[ORM\Column]
-    private ?int $id = null;
 
     #[ORM\OneToOne(inversedBy: 'shipment', cascade: ['persist', 'remove'])]
     #[ORM\JoinColumn(nullable: false)]
@@ -24,19 +20,6 @@ class Shipment
 
     #[ORM\Column(nullable: true)]
     private ?int $price = null;
-
-    #[Gedmo\Timestampable(on: 'create')]
-    #[ORM\Column(name: 'created', type: Types::DATETIME_MUTABLE)]
-    private ?\DateTimeInterface $created = null;
-
-    #[Gedmo\Timestampable(on: 'update')]
-    #[ORM\Column(name: 'updated', nullable: true,  type: Types::DATETIME_MUTABLE)]
-    private ?\DateTimeInterface $updated = null;
-
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
 
     public function getCameraRollId(): ?CameraRoll
     {
@@ -74,27 +57,4 @@ class Shipment
         return $this;
     }
 
-    public function getCreated(): ?\DateTimeInterface
-    {
-        return $this->created;
-    }
-
-    public function setCreated(\DateTimeInterface $created): static
-    {
-        $this->created = $created;
-
-        return $this;
-    }
-
-    public function getUpdated(): ?\DateTimeInterface
-    {
-        return $this->updated;
-    }
-
-    public function setUpdated(?\DateTimeInterface $updated): static
-    {
-        $this->updated = $updated;
-
-        return $this;
-    }
 }

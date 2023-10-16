@@ -5,9 +5,7 @@ namespace App\Entity;
 use App\Repository\CameraRollPaperSizeRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
-use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
-use Gedmo\Mapping\Annotation as Gedmo;
 
 #[ORM\Entity(repositoryClass: CameraRollPaperSizeRepository::class)]
 class CameraRollPaperSize extends AbstractEntity
